@@ -1,4 +1,4 @@
-import { ListGroup, ListGroupItem } from "reactstrap";
+import { ListGroup, ListGroupItem, Badge } from "reactstrap";
 import React, { Component } from "react";
 import { CategoryListProps, Category } from "../types";
 
@@ -24,17 +24,27 @@ export default class CategoryList extends Component<CategoryListProps, CategoryL
   render() {
     return (
       <div>
-        <h3>{this.props.info.title}</h3>
-        <ListGroup>
+        <h5 className="mb-3 fw-bold text-primary">
+          {this.props.info.title}
+        </h5>
+        <ListGroup flush>
           {this.state.categories.map(category => (
-            <ListGroupItem active={category.categoryName===this.props.currentCategory?true:false}
-                onClick={() => this.props.changeCategory(category)} 
-                key={category.id}>
-              {category.categoryName}
+            <ListGroupItem 
+              action
+              active={category.categoryName === this.props.currentCategory}
+              onClick={() => this.props.changeCategory(category)} 
+              key={category.id}
+              className="border-0 py-2 cursor-pointer"
+              style={{ cursor: 'pointer' }}
+            >
+              <div className="d-flex justify-content-between align-items-center">
+                <span className={category.categoryName === this.props.currentCategory ? 'fw-bold' : ''}>
+                  {category.categoryName}
+                </span>
+              </div>
             </ListGroupItem>
           ))}
         </ListGroup>
-        {/* <h4>{this.props.currentCategory}</h4> */}
       </div>
     );
   }

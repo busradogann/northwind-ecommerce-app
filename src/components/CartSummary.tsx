@@ -4,9 +4,7 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  Badge,
-  NavItem,
-  NavLink
+  Badge
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import { CartListProps } from "../types";
@@ -37,9 +35,7 @@ export default class CartSummary extends Component<CartListProps> {
 
   renderEmptyCart = (): JSX.Element => {
     return (
-      <NavItem>
-        <NavLink>Empty Cart</NavLink>
-      </NavItem>
+      <span className="nav-link">Empty Cart</span>
     );
   };
 

@@ -18,26 +18,39 @@ export default function Navi(props: NaviProps) {
   const toggle = () => setIsOpen(!isOpen);
 
   return (
-    <div>
-      <Navbar color="light" light expand="md">
-        <NavbarBrand href="/">Northwind App</NavbarBrand>
-        <NavbarToggler onClick={toggle} />
-        <Nav className="ml-auto" navbar>
-        <Collapse isOpen={isOpen} navbar>
-            <NavItem>
-              <NavLink>
-                <Link to="form1">Form Demo 1</Link>
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink>
-                <Link to="form2">Form Demo 2</Link>
-              </NavLink>
-            </NavItem>
+    <Navbar 
+      color="white" 
+      light 
+      expand="md" 
+      className="shadow-sm mb-4 rounded"
+      style={{ border: '1px solid #e9ecef' }}
+    >
+      <NavbarBrand href="/" className="fw-bold text-primary">
+        Northwind App
+      </NavbarBrand>
+      <NavbarToggler onClick={toggle} />
+      <Collapse isOpen={isOpen} navbar>
+        <Nav className="ms-auto" navbar>
+          <NavItem>
+            <NavLink tag={Link} to="/" className="text-decoration-none">
+              Products
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink tag={Link} to="/form1" className="text-decoration-none">
+              Form Demo 1
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink tag={Link} to="/form2" className="text-decoration-none">
+              Form Demo 2
+            </NavLink>
+          </NavItem>
+          <NavItem>
             <CartSummary cart={props.cart} removeFromCart={props.removeFromCart}/>
-        </Collapse>
+          </NavItem>
         </Nav>
-      </Navbar>
-    </div>
+      </Collapse>
+    </Navbar>
   );
 };

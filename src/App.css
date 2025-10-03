@@ -1,28 +1,28 @@
-/*body {
-  background-color: #14455d;
-}*/
+/* Custom styles that can't be replaced by Reactstrap utilities */
 
-.App {
-  margin: 0 auto;
+/* Smooth transitions for interactive elements */
+.btn {
+  transition: all 0.2s ease-in-out;
 }
 
-#header {
-  padding: 0 30%;
+.btn:hover {
+  transform: translateY(-1px);
 }
 
-#header ul li {
-  float: left;
-  list-style: none;
-  margin-right: 10%;
+/* Custom table styling */
+.table th {
+  border-top: none;
 }
 
-#header ul li a {
-  text-decoration: none;
-  color: #fff;
+/* Enhanced pagination */
+.pagination .page-link {
+  margin: 0 1px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
 }
 
-#header ul li a:hover {
-  border-bottom: 2px solid #000;
+.pagination .page-link:hover {
+  transform: translateY(-1px);
 }
 
 .App-logo {

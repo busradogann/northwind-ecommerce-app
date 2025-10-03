@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Table, Button, Pagination, PaginationItem, PaginationLink } from "reactstrap";
+import { Table, Button, Pagination, PaginationItem, PaginationLink, Badge } from "reactstrap";
 import { ProductsListProps } from "../types";
 
 export default class ProductsList extends Component<ProductsListProps> {
@@ -41,44 +41,80 @@ export default class ProductsList extends Component<ProductsListProps> {
     
     return (
       <div>
-        <span>{this.props.info.title}</span> -{" "}
-        <span>{this.props.currentCategory}</span>
-        <Table>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Product Name</th>
-              <th>Quantity Per Unit</th>
-              <th>Unit Price</th>
-              <th>Unit In Stock</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.props.products.map(product => (
-              <tr key={product.id}>
-                <th scope="row">{product.id}</th>
-                <td>{product.productName}</td>
-                <td>{product.quantityPerUnit}</td>
-                <td>{product.unitPrice}</td>
-                <td>{product.unitsInStock}</td>
-                <td><Button onClick={()=>this.props.addToCart(product)} color="info">Add</Button>{' '}</td>
+        <div className="d-flex justify-content-between align-items-center mb-4">
+          <h4 className="mb-0">
+            {this.props.info.title}
+            {this.props.currentCategory && (
+              <Badge color="secondary" className="mx-2">
+                {this.props.currentCategory}
+              </Badge>
+            )}
+          </h4>
+          <small className="text-muted">
+            {this.props.products.length} products found
+          </small>
+        </div>
+        
+        <div className="table-responsive">
+          <Table hover striped className="align-middle">
+            <thead className="table-dark">
+              <tr>
+                <th style={{ width: "5%" }}>#</th>
+                <th style={{ width: "25%" }}>Product Name</th>
+                <th style={{ width: "20%" }} className="d-none d-md-table-cell">Quantity Per Unit</th>
+                <th style={{ width: "15%" }}>Unit Price</th>
+                <th style={{ width: "15%" }} className="d-none d-sm-table-cell">Stock</th>
+                <th style={{ width: "20%" }}>Action</th>
               </tr>
-            ))}
-          </tbody>
-        </Table>
+            </thead>
+            <tbody>
+              {this.props.products.map(product => (
+                <tr key={product.id}>
+                  <th scope="row" className="fw-normal">{product.id}</th>
+                  <td>
+                    <div className="fw-semibold">{product.productName}</div>
+                    <div className="d-md-none text-muted small mt-1">
+                      {product.quantityPerUnit}
+                    </div>
+                  </td>
+                  <td className="d-none d-md-table-cell">{product.quantityPerUnit}</td>
+                  <td>
+                    <span className="fw-bold text-success">${product.unitPrice}</span>
+                  </td>
+                  <td className="d-none d-sm-table-cell">
+                    <Badge 
+                      color={product.unitsInStock > 10 ? "success" : product.unitsInStock > 0 ? "warning" : "danger"}
+                    >
+                      {product.unitsInStock}
+                    </Badge>
+                  </td>
+                  <td>
+                    <Button 
+                      onClick={()=>this.props.addToCart(product)} 
+                      color="primary" 
+                      size="sm"
+                      className="rounded-pill px-3"
+                    >
+                      Add to Cart
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </div>
         
         {totalPages > 1 && (
-          <div className="d-flex justify-content-center mt-3">
-            <Pagination>
+          <div className="d-flex justify-content-center mt-4">
+            <Pagination className="mb-0">
               {this.renderPaginationItems()}
             </Pagination>
           </div>
         )}
         
-        <div className="text-center mt-2">
+        <div className="text-center mt-3">
           <small className="text-muted">
-            Sayfa {currentPage} / {totalPages}
+            Showing page {currentPage} of {totalPages}
           </small>
         </div>
       </div>

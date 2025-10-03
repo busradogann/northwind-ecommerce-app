@@ -9,7 +9,7 @@ import FormDemo1 from "./components/FormDemo1";
 import FormDemo2 from "./components/FormDemo2";
 
 import { Component } from "react";
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, Card, CardBody } from "reactstrap";
 import { Route, Switch } from "react-router-dom";
 import { AppState, Product, Category, CartItem } from "./types";
 import alertify from "alertifyjs";
@@ -87,51 +87,63 @@ export default class App extends Component<{}, AppState> {
     const productList = { title: "Product List" };
 
     return (
-      <div>
-        <Container>
+      <div className="min-vh-100 bg-light">
+        <Container fluid="xl" className="py-3">
           <Navi cart={this.state.cart} removeFromCart={this.removeFromCart} />
-          <Row>
-            <Col xs="3">
-              <CategoryList
-                currentCategory={this.state.currentCategory}
-                changeCategory={this.changeCategory}
-                info={categoryList}
-              />
+          
+          <Row className="g-3">
+            {/* Category Column - Hidden on mobile, 3 cols on tablet+, 2 cols on large screens */}
+            <Col xs="12" md="3" lg="2" className="d-none d-md-block">
+              <Card className="shadow-sm h-100">
+                <CardBody className="p-3">
+                  <CategoryList
+                    currentCategory={this.state.currentCategory}
+                    changeCategory={this.changeCategory}
+                    info={categoryList}
+                  />
+                </CardBody>
+              </Card>
             </Col>
-            <Col xs="9">
-              <Switch>
-                <Route
-                  exact
-                  path="/"
-                  render={(props: any) => (
-                    <ProductsList
-                      {...props}
-                      products={this.getPaginatedProducts()}
-                      addToCart={this.addToCart}
-                      currentCategory={this.state.currentCategory}
-                      changeCategory={this.changeCategory}
-                      info={productList}
-                      currentPage={this.state.currentPage}
-                      totalPages={this.getTotalPages()}
-                      onPageChange={this.handlePageChange}
+            
+            {/* Products Column - 12 cols on mobile, 9 cols on tablet+, 10 cols on large screens */}
+            <Col xs="12" md="9" lg="10">
+              <Card className="shadow-sm">
+                <CardBody className="p-4">
+                  <Switch>
+                    <Route
+                      exact
+                      path="/"
+                      render={(props: any) => (
+                        <ProductsList
+                          {...props}
+                          products={this.getPaginatedProducts()}
+                          addToCart={this.addToCart}
+                          currentCategory={this.state.currentCategory}
+                          changeCategory={this.changeCategory}
+                          info={productList}
+                          currentPage={this.state.currentPage}
+                          totalPages={this.getTotalPages()}
+                          onPageChange={this.handlePageChange}
+                        />
+                      )}
                     />
-                  )}
-                />
-                <Route
-                  exact
-                  path="/cart"
-                  render={(props: any) => (
-                    <CartList
-                      {...props}
-                      cart={this.state.cart}
-                      removeFromCart={this.removeFromCart}
+                    <Route
+                      exact
+                      path="/cart"
+                      render={(props: any) => (
+                        <CartList
+                          {...props}
+                          cart={this.state.cart}
+                          removeFromCart={this.removeFromCart}
+                        />
+                      )}
                     />
-                  )}
-                />
-                <Route path="/form1" component={FormDemo1} />
-                <Route path="/form2" component={FormDemo2} />
-                <Route component={NotFound} />
-              </Switch>
+                    <Route path="/form1" component={FormDemo1} />
+                    <Route path="/form2" component={FormDemo2} />
+                    <Route component={NotFound} />
+                  </Switch>
+                </CardBody>
+              </Card>
             </Col>
           </Row>
         </Container>
