@@ -16,7 +16,7 @@ export interface Category {
 }
 
 // Cart item type definition
-export interface CartItem {
+export interface Cart {
   product: Product;
   quantity: number;
 }
@@ -46,12 +46,12 @@ export interface ProductsListProps {
 }
 
 export interface CartListProps {
-  cart: CartItem[];
+  cart: Cart[];
   removeFromCart: (product: Product) => void;
 }
 
 export interface NaviProps {
-  cart: CartItem[];
+  cart: Cart[];
   removeFromCart: (product: Product) => void;
 }
 
@@ -59,7 +59,7 @@ export interface NaviProps {
 export interface AppState {
   currentCategory: string;
   products: Product[];
-  cart: CartItem[];
+  cart: Cart[];
   currentPage: number;
   productsPerPage: number;
   searchTerm: string;

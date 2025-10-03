@@ -11,13 +11,13 @@ import FormDemo2 from "./components/form-demo-2";
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Card, CardBody } from "reactstrap";
 import { Route, Switch } from "react-router-dom";
-import { Product, Category, CartItem } from "./types/models";
+import { Product, Category, Cart } from "./types/models";
 import alertify from "alertifyjs";
 
 const App: React.FC = () => {
   const [currentCategory, setCurrentCategory] = useState<string>("");
   const [products, setProducts] = useState<Product[]>([]);
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const [cart, setCart] = useState<Cart[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [productsPerPage] = useState<number>(10);
   const [searchTerm, setSearchTerm] = useState<string>("");
