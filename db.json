@@ -620,42 +620,42 @@
   "categories": [
     {
       "id": 1,
-      "categoryName": "Beverages",
+      "name": "Beverages",
       "seoUrl": "beverages"
     },
     {
       "id": 2,
-      "categoryName": "Condiments",
+      "name": "Condiments",
       "seoUrl": "condiments"
     },
     {
       "id": 3,
-      "categoryName": "Confections",
+      "name": "Confections",
       "seoUrl": "confections"
     },
     {
       "id": 4,
-      "categoryName": "Dairy Products",
+      "name": "Dairy Products",
       "seoUrl": "dairy-products"
     },
     {
       "id": 5,
-      "categoryName": "Grains/Cereals",
+      "name": "Grains/Cereals",
       "seoUrl": "grains-cereals"
     },
     {
       "id": 6,
-      "categoryName": "Meat/Poultry",
+      "name": "Meat/Poultry",
       "seoUrl": "meat-poultry"
     },
     {
       "id": 7,
-      "categoryName": "Produce",
+      "name": "Produce",
       "seoUrl": "produce"
     },
     {
       "id": 8,
-      "categoryName": "Seafood",
+      "name": "Seafood",
       "seoUrl": "seafood"
     }
   ]

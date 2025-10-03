@@ -27,7 +27,7 @@ const App: React.FC = () => {
   }, []);
 
   const changeCategory = (category: Category) => {
-    setCurrentCategory(category.categoryName);
+    setCurrentCategory(category.name);
     setCurrentPage(1);
     setSearchTerm("");
     getProducts(category.id);
