@@ -8,36 +8,37 @@ import CartList from "./components/CartList";
 import FormDemo1 from "./components/FormDemo1";
 import FormDemo2 from "./components/FormDemo2";
 
-import { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Card, CardBody } from "reactstrap";
 import { Route, Switch } from "react-router-dom";
-import { AppState, Product, Category, CartItem } from "./types";
+import { Product, Category, CartItem } from "./types";
 import alertify from "alertifyjs";
 
-export default class App extends Component<{}, AppState> {
-  state: AppState = {
-    currentCategory: "",
-    products: [],
-    cart: [],
-    currentPage: 1,
-    productsPerPage: 10,
-    searchTerm: ""
+const App: React.FC = () => {
+  const [currentCategory, setCurrentCategory] = useState<string>("");
+  const [products, setProducts] = useState<Product[]>([]);
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [productsPerPage] = useState<number>(10);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
+  const changeCategory = (category: Category) => {
+    setCurrentCategory(category.categoryName);
+    setCurrentPage(1);
+    setSearchTerm("");
+    getProducts(category.id);
   };
 
-  componentDidMount = () => {
-    this.getProducts(); //component render edildikten sonra product'lari cekiyor.
+  const handleSearch = (searchTerm: string) => {
+    setSearchTerm(searchTerm);
+    setCurrentPage(1);
   };
 
-  changeCategory = (category: Category) => {
-    this.setState({ currentCategory: category.categoryName, currentPage: 1, searchTerm: "" }); //o anki category bilgisini tutuyor.
-    this.getProducts(category.id);
-  };
-
-  handleSearch = (searchTerm: string) => {
-    this.setState({ searchTerm, currentPage: 1 });
-  };
-
-  getProducts = (categoryId?: number) => {
+  const getProducts = (categoryId?: number) => {
     let url = "http://localhost:3000/products";
 
     if (categoryId) {
@@ -45,11 +46,11 @@ export default class App extends Component<{}, AppState> {
     }
     fetch(url)
       .then(response => response.json())
-      .then((data: Product[]) => this.setState({ products: data }));
+      .then((data: Product[]) => setProducts(data));
   };
 
-  addToCart = (product: Product) => {
-    let newCart = [...this.state.cart];
+  const addToCart = (product: Product) => {
+    let newCart = [...cart];
     var addedItem = newCart.find(
       cartItem => cartItem.product.id === product.id
     );
@@ -58,25 +59,24 @@ export default class App extends Component<{}, AppState> {
     } else {
       newCart.push({ product: product, quantity: 1 });
     }
-    this.setState({ cart: newCart });
+    setCart(newCart);
     alertify.success(product.productName + " added to cart!!!", 3);
   };
 
-  removeFromCart = (product: Product) => {
-    let newCart = this.state.cart.filter(
+  const removeFromCart = (product: Product) => {
+    let newCart = cart.filter(
       cartItem => cartItem.product.id !== product.id
     );
-    this.setState({ cart: newCart });
+    setCart(newCart);
     alertify.error(product.productName + " removed to cart!!!", 3);
   };
 
   // Pagination methods
-  handlePageChange = (pageNumber: number) => {
-    this.setState({ currentPage: pageNumber });
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
   };
 
-  getFilteredProducts = (): Product[] => {
-    const { products, searchTerm } = this.state;
+  const getFilteredProducts = (): Product[] => {
     if (!searchTerm.trim()) {
       return products;
     }
@@ -85,88 +85,86 @@ export default class App extends Component<{}, AppState> {
     );
   };
 
-  getPaginatedProducts = (): Product[] => {
-    const { currentPage, productsPerPage } = this.state;
-    const filteredProducts = this.getFilteredProducts();
+  const getPaginatedProducts = (): Product[] => {
+    const filteredProducts = getFilteredProducts();
     const startIndex = (currentPage - 1) * productsPerPage;
     const endIndex = startIndex + productsPerPage;
     return filteredProducts.slice(startIndex, endIndex);
   };
 
-  getTotalPages = (): number => {
-    const { productsPerPage } = this.state;
-    const filteredProducts = this.getFilteredProducts();
+  const getTotalPages = (): number => {
+    const filteredProducts = getFilteredProducts();
     return Math.ceil(filteredProducts.length / productsPerPage);
   };
 
-  render() {
-    const categories = { title: "Categories" };
-    const products = { title: "Products" };
+  const categories = { title: "Categories" };
+  const productsInfo = { title: "Products" };
 
-    return (
-      <div className="min-vh-100 bg-light">
-        <Container fluid="xl" className="py-3">
-          <Navi cart={this.state.cart} removeFromCart={this.removeFromCart} />
+  return (
+    <div className="min-vh-100 bg-light">
+      <Container fluid="xl" className="py-3">
+        <Navi cart={cart} removeFromCart={removeFromCart} />
+        
+        <Row className="g-3">
+          {/* Category Column - Hidden on mobile, 3 cols on tablet+, 2 cols on large screens */}
+          <Col xs="12" md="3" lg="2" className="d-none d-md-block">
+            <Card className="shadow-sm h-100">
+              <CardBody className="p-3">
+                <CategoryList
+                  currentCategory={currentCategory}
+                  changeCategory={changeCategory}
+                  info={categories}
+                />
+              </CardBody>
+            </Card>
+          </Col>
           
-          <Row className="g-3">
-            {/* Category Column - Hidden on mobile, 3 cols on tablet+, 2 cols on large screens */}
-            <Col xs="12" md="3" lg="2" className="d-none d-md-block">
-              <Card className="shadow-sm h-100">
-                <CardBody className="p-3">
-                  <CategoryList
-                    currentCategory={this.state.currentCategory}
-                    changeCategory={this.changeCategory}
-                    info={categories}
+          {/* Products Column - 12 cols on mobile, 9 cols on tablet+, 10 cols on large screens */}
+          <Col xs="12" md="9" lg="10">
+            <Card className="shadow-sm">
+              <CardBody className="p-4">
+                <Switch>
+                  <Route
+                    exact
+                    path="/"
+                    render={(props: any) => (
+                    <ProductsList
+                      {...props}
+                      products={getPaginatedProducts()}
+                      addToCart={addToCart}
+                      currentCategory={currentCategory}
+                      changeCategory={changeCategory}
+                      info={productsInfo}
+                      currentPage={currentPage}
+                      totalPages={getTotalPages()}
+                      onPageChange={handlePageChange}
+                      searchTerm={searchTerm}
+                      onSearch={handleSearch}
+                    />
+                    )}
                   />
-                </CardBody>
-              </Card>
-            </Col>
-            
-            {/* Products Column - 12 cols on mobile, 9 cols on tablet+, 10 cols on large screens */}
-            <Col xs="12" md="9" lg="10">
-              <Card className="shadow-sm">
-                <CardBody className="p-4">
-                  <Switch>
-                    <Route
-                      exact
-                      path="/"
-                      render={(props: any) => (
-                      <ProductsList
+                  <Route
+                    exact
+                    path="/cart"
+                    render={(props: any) => (
+                      <CartList
                         {...props}
-                        products={this.getPaginatedProducts()}
-                        addToCart={this.addToCart}
-                        currentCategory={this.state.currentCategory}
-                        changeCategory={this.changeCategory}
-                        info={products}
-                        currentPage={this.state.currentPage}
-                        totalPages={this.getTotalPages()}
-                        onPageChange={this.handlePageChange}
-                        searchTerm={this.state.searchTerm}
-                        onSearch={this.handleSearch}
+                        cart={cart}
+                        removeFromCart={removeFromCart}
                       />
-                      )}
-                    />
-                    <Route
-                      exact
-                      path="/cart"
-                      render={(props: any) => (
-                        <CartList
-                          {...props}
-                          cart={this.state.cart}
-                          removeFromCart={this.removeFromCart}
-                        />
-                      )}
-                    />
-                    <Route path="/form1" component={FormDemo1} />
-                    <Route path="/form2" component={FormDemo2} />
-                    <Route component={NotFound} />
-                  </Switch>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-        </Container>
-      </div>
-    );
-  }
-}
+                    )}
+                  />
+                  <Route path="/form1" component={FormDemo1} />
+                  <Route path="/form2" component={FormDemo2} />
+                  <Route component={NotFound} />
+                </Switch>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+    </div>
+  );
+};
+
+export default App;

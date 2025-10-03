@@ -37,6 +37,11 @@ export default function Navi(props: NaviProps) {
             </NavLink>
           </NavItem>
           <NavItem>
+            <NavLink tag={Link} to="/cart" className="text-decoration-none">
+              Cart
+            </NavLink>
+          </NavItem>
+          <NavItem>
             <NavLink tag={Link} to="/form1" className="text-decoration-none">
               Form Demo 1
             </NavLink>

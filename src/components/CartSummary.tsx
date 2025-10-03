@@ -11,10 +11,13 @@ import { CartListProps } from "../types";
 
 export default class CartSummary extends Component<CartListProps> {
   renderSummary = (): JSX.Element => {
+    const totalItems = this.props.cart.reduce((total, item) => total + item.quantity, 0);
+    
     return (
       <UncontrolledDropdown nav inNavbar>
-        <DropdownToggle nav caret>
-          Your Cart
+        <DropdownToggle nav caret className="d-flex align-items-center">
+          <Badge color="primary" className="me-2">{totalItems}</Badge>
+          Cart
         </DropdownToggle>
         <DropdownMenu right>
           {this.props.cart.map(cartItem => (
@@ -35,7 +38,10 @@ export default class CartSummary extends Component<CartListProps> {
 
   renderEmptyCart = (): JSX.Element => {
     return (
-      <span className="nav-link">Empty Cart</span>
+      <span className="nav-link d-flex align-items-center">
+        <Badge color="secondary" className="me-2">0</Badge>
+        Cart
+      </span>
     );
   };
 
