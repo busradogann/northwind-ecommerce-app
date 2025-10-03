@@ -7,7 +7,7 @@ import {
   Badge
 } from "reactstrap";
 import { Link } from "react-router-dom";
-import { CartListProps } from "../types";
+import { CartListProps } from "../types/models";
 
 export default class CartSummary extends Component<CartListProps> {
   renderSummary = (): JSX.Element => {

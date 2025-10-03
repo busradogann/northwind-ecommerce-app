@@ -1,6 +1,6 @@
 import { ListGroup, ListGroupItem, Badge } from "reactstrap";
 import React, { Component } from "react";
-import { CategoryListProps, Category } from "../types";
+import { CategoryListProps, Category } from "../types/models";
 
 interface CategoryListState {
   categories: Category[];

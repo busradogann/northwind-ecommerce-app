@@ -1,17 +1,17 @@
 import "./App.css";
 
-import Navi from "./components/Navi";
-import CategoryList from "./components/CategoryList";
-import ProductsList from "./components/ProductsList";
-import NotFound from "./components/NotFound";
-import CartList from "./components/CartList";
-import FormDemo1 from "./components/FormDemo1";
-import FormDemo2 from "./components/FormDemo2";
+import Navi from "./components/navbar";
+import CategoryList from "./components/category-list";
+import ProductsList from "./components/product-list";
+import NotFound from "./components/not-found";
+import CartList from "./components/cart-list";
+import FormDemo1 from "./components/form-demo-1";
+import FormDemo2 from "./components/form-demo-2";
 
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Card, CardBody } from "reactstrap";
 import { Route, Switch } from "react-router-dom";
-import { Product, Category, CartItem } from "./types";
+import { Product, Category, CartItem } from "./types/models";
 import alertify from "alertifyjs";
 
 const App: React.FC = () => {

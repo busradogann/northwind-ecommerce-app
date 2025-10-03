@@ -1,7 +1,7 @@
 import React from "react";
 import { Table, Button, Card, CardBody, Badge, Alert } from "reactstrap";
 import { Link } from "react-router-dom";
-import { CartListProps } from "../types";
+import { CartListProps } from "../types/models";
 
 const CartList: React.FC<CartListProps> = ({ cart, removeFromCart }) => {
   const getTotalItems = () => {

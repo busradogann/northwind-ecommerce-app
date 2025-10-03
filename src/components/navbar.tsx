@@ -8,9 +8,9 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
-import CartSummary from "./CartSummary";
+import CartSummary from "./cart-summary";
 import { Link } from "react-router-dom";
-import { NaviProps } from "../types";
+import { NaviProps } from "../types/models";
 
 export default function Navi(props: NaviProps) {
   const [isOpen, setIsOpen] = useState(false);

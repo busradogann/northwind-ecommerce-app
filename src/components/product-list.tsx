@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Table, Button, Pagination, PaginationItem, PaginationLink, Badge, Input, InputGroup, InputGroupText } from "reactstrap";
-import { ProductsListProps } from "../types";
+import { ProductsListProps } from "../types/models";
 
 export default class ProductsList extends Component<ProductsListProps> {
 
