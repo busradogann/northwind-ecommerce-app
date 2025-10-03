@@ -1,8 +1,8 @@
 import "./App.css";
 
 import Navi from "./components/navbar";
-import CategoryList from "./components/category-list";
-import ProductsList from "./components/product-list";
+import Categories from "./components/categories";
+import Products from "./components/products";
 import NotFound from "./components/not-found";
 import CartList from "./components/cart-list";
 import FormDemo1 from "./components/form-demo-1";
@@ -110,7 +110,7 @@ const App: React.FC = () => {
           <Col xs="12" md="3" lg="2" className="d-none d-md-block">
             <Card className="shadow-sm h-100">
               <CardBody className="p-3">
-                <CategoryList
+                <Categories
                   currentCategory={currentCategory}
                   changeCategory={changeCategory}
                   info={categories}
@@ -128,7 +128,7 @@ const App: React.FC = () => {
                     exact
                     path="/"
                     render={(props: any) => (
-                    <ProductsList
+                      <Products
                       {...props}
                       products={getPaginatedProducts()}
                       addToCart={addToCart}

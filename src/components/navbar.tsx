@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Collapse,
   Navbar,
@@ -8,7 +8,7 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
-import CartSummary from "./cart-summary";
+import Cart from "./cart";
 import { Link } from "react-router-dom";
 import { NaviProps } from "../types/models";
 
@@ -52,7 +52,7 @@ export default function Navi(props: NaviProps) {
             </NavLink>
           </NavItem>
           <NavItem>
-            <CartSummary cart={props.cart} removeFromCart={props.removeFromCart}/>
+            <Cart cart={props.cart} removeFromCart={props.removeFromCart}/>
           </NavItem>
         </Nav>
       </Collapse>

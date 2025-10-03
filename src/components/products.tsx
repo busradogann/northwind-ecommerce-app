@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import { Table, Button, Pagination, PaginationItem, PaginationLink, Badge, Input, InputGroup, InputGroupText } from "reactstrap";
 import { ProductsListProps } from "../types/models";
 

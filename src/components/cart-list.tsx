@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, Button, Card, CardBody, Badge, Alert } from "reactstrap";
+import { Table, Button, Badge, Alert } from "reactstrap";
 import { Link } from "react-router-dom";
 import { CartListProps } from "../types/models";
 
