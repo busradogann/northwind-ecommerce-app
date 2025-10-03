@@ -10,12 +10,12 @@ import FormDemo2 from "./components/FormDemo2";
 
 import { Component } from "react";
 import { Container, Row, Col } from "reactstrap";
-import alertify from "alertifyjs";
 import { Route, Switch } from "react-router-dom";
+import { AppState, Product, Category, CartItem } from "./types";
+import alertify from "alertifyjs";
 
-
-export default class App extends Component {
-  state = {
+export default class App extends Component<{}, AppState> {
+  state: AppState = {
     currentCategory: "",
     products: [],
     cart: [],
@@ -27,12 +27,12 @@ export default class App extends Component {
     this.getProducts(); //component render edildikten sonra product'lari cekiyor.
   };
 
-  changeCategory = category => {
+  changeCategory = (category: Category) => {
     this.setState({ currentCategory: category.categoryName, currentPage: 1 }); //o anki category bilgisini tutuyor.
     this.getProducts(category.id);
   };
 
-  getProducts = categoryId => {
+  getProducts = (categoryId?: number) => {
     let url = "http://localhost:3000/products";
 
     if (categoryId) {
@@ -40,11 +40,11 @@ export default class App extends Component {
     }
     fetch(url)
       .then(response => response.json())
-      .then(data => this.setState({ products: data }));
+      .then((data: Product[]) => this.setState({ products: data }));
   };
 
-  addToCart = product => {
-    let newCart = this.state.cart;
+  addToCart = (product: Product) => {
+    let newCart = [...this.state.cart];
     var addedItem = newCart.find(
       cartItem => cartItem.product.id === product.id
     );
@@ -57,7 +57,7 @@ export default class App extends Component {
     alertify.success(product.productName + " added to cart!!!", 3);
   };
 
-  removeFromCart = product => {
+  removeFromCart = (product: Product) => {
     let newCart = this.state.cart.filter(
       cartItem => cartItem.product.id !== product.id
     );
@@ -66,25 +66,25 @@ export default class App extends Component {
   };
 
   // Pagination methods
-  handlePageChange = pageNumber => {
+  handlePageChange = (pageNumber: number) => {
     this.setState({ currentPage: pageNumber });
   };
 
-  getPaginatedProducts = () => {
+  getPaginatedProducts = (): Product[] => {
     const { products, currentPage, productsPerPage } = this.state;
     const startIndex = (currentPage - 1) * productsPerPage;
     const endIndex = startIndex + productsPerPage;
     return products.slice(startIndex, endIndex);
   };
 
-  getTotalPages = () => {
+  getTotalPages = (): number => {
     const { products, productsPerPage } = this.state;
     return Math.ceil(products.length / productsPerPage);
   };
 
   render() {
-    let categoryList = { title: "Category List" };
-    let productList = { title: "Product List" };
+    const categoryList = { title: "Category List" };
+    const productList = { title: "Product List" };
 
     return (
       <div>
@@ -103,7 +103,7 @@ export default class App extends Component {
                 <Route
                   exact
                   path="/"
-                  render={props => (
+                  render={(props: any) => (
                     <ProductsList
                       {...props}
                       products={this.getPaginatedProducts()}
@@ -120,7 +120,7 @@ export default class App extends Component {
                 <Route
                   exact
                   path="/cart"
-                  render={props => (
+                  render={(props: any) => (
                     <CartList
                       {...props}
                       cart={this.state.cart}

@@ -2,22 +2,29 @@ import React, { Component } from "react";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import alertify from "alertifyjs";
 
-export default class FormDemo2 extends Component {
-  state = {
+interface FormDemo2State {
+  email: string;
+  password: string;
+  city: string;
+  description: string;
+}
+
+export default class FormDemo2 extends Component<{}, FormDemo2State> {
+  state: FormDemo2State = {
     email: "",
     password: "",
     city: "",
     description: ""
   };
 
-  onChangeHandler = event => {
+  onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     let name = event.target.name;
     let value = event.target.value;
 
-    this.setState({ [name]: value });
+    this.setState({ [name]: value } as Pick<FormDemo2State, keyof FormDemo2State>);
   };
 
-  onSubmithandler = event => {
+  onSubmithandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     alertify.success(this.state.email + " added to db!", 3);
   };

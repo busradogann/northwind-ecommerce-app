@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, JSX } from "react";
 import {
   UncontrolledDropdown,
   DropdownToggle,
@@ -9,9 +9,10 @@ import {
   NavLink
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import { CartListProps } from "../types";
 
-export default class CartSummary extends Component {
-  renderSummary = () => {
+export default class CartSummary extends Component<CartListProps> {
+  renderSummary = (): JSX.Element => {
     return (
       <UncontrolledDropdown nav inNavbar>
         <DropdownToggle nav caret>
@@ -34,7 +35,7 @@ export default class CartSummary extends Component {
     );
   };
 
-  renderEmptyCart = () => {
+  renderEmptyCart = (): JSX.Element => {
     return (
       <NavItem>
         <NavLink>Empty Cart</NavLink>

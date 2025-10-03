@@ -10,8 +10,9 @@ import {
 } from "reactstrap";
 import CartSummary from "./CartSummary";
 import { Link } from "react-router-dom";
+import { NaviProps } from "../types";
 
-export default function Navi(props) {
+export default function Navi(props: NaviProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);

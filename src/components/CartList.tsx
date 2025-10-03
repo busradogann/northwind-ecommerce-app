@@ -1,8 +1,9 @@
-import React, { Component } from "react";
+import React, { Component, JSX } from "react";
 import { Table, Button } from "reactstrap";
+import { CartListProps } from "../types";
 
-export default class CartList extends Component {
-  renderCart = () => {
+export default class CartList extends Component<CartListProps> {
+  renderCart = (): JSX.Element => {
     return (
       <Table striped>
         <thead>
