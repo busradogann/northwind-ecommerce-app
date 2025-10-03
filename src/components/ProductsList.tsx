@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Table, Button, Pagination, PaginationItem, PaginationLink, Badge } from "reactstrap";
+import { Table, Button, Pagination, PaginationItem, PaginationLink, Badge, Input, InputGroup, InputGroupText } from "reactstrap";
 import { ProductsListProps } from "../types";
 
 export default class ProductsList extends Component<ProductsListProps> {
@@ -37,7 +37,7 @@ export default class ProductsList extends Component<ProductsListProps> {
   };
 
   render() {
-    const { currentPage, totalPages } = this.props;
+    const { currentPage, totalPages, searchTerm, onSearch } = this.props;
     
     return (
       <div>
@@ -53,6 +53,22 @@ export default class ProductsList extends Component<ProductsListProps> {
           <small className="text-muted">
             {this.props.products.length} products found
           </small>
+        </div>
+
+        {/* Search Input */}
+        <div className="mb-4">
+          <InputGroup>
+            <InputGroupText>
+              🔍
+            </InputGroupText>
+            <Input
+              type="text"
+              placeholder="Search products by name..."
+              value={searchTerm}
+              onChange={(e) => onSearch(e.target.value)}
+              className="border-0"
+            />
+          </InputGroup>
         </div>
         
         <div className="table-responsive">

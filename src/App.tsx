@@ -20,7 +20,8 @@ export default class App extends Component<{}, AppState> {
     products: [],
     cart: [],
     currentPage: 1,
-    productsPerPage: 10
+    productsPerPage: 10,
+    searchTerm: ""
   };
 
   componentDidMount = () => {
@@ -28,8 +29,12 @@ export default class App extends Component<{}, AppState> {
   };
 
   changeCategory = (category: Category) => {
-    this.setState({ currentCategory: category.categoryName, currentPage: 1 }); //o anki category bilgisini tutuyor.
+    this.setState({ currentCategory: category.categoryName, currentPage: 1, searchTerm: "" }); //o anki category bilgisini tutuyor.
     this.getProducts(category.id);
+  };
+
+  handleSearch = (searchTerm: string) => {
+    this.setState({ searchTerm, currentPage: 1 });
   };
 
   getProducts = (categoryId?: number) => {
@@ -70,21 +75,33 @@ export default class App extends Component<{}, AppState> {
     this.setState({ currentPage: pageNumber });
   };
 
+  getFilteredProducts = (): Product[] => {
+    const { products, searchTerm } = this.state;
+    if (!searchTerm.trim()) {
+      return products;
+    }
+    return products.filter(product => 
+      product.productName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  };
+
   getPaginatedProducts = (): Product[] => {
-    const { products, currentPage, productsPerPage } = this.state;
+    const { currentPage, productsPerPage } = this.state;
+    const filteredProducts = this.getFilteredProducts();
     const startIndex = (currentPage - 1) * productsPerPage;
     const endIndex = startIndex + productsPerPage;
-    return products.slice(startIndex, endIndex);
+    return filteredProducts.slice(startIndex, endIndex);
   };
 
   getTotalPages = (): number => {
-    const { products, productsPerPage } = this.state;
-    return Math.ceil(products.length / productsPerPage);
+    const { productsPerPage } = this.state;
+    const filteredProducts = this.getFilteredProducts();
+    return Math.ceil(filteredProducts.length / productsPerPage);
   };
 
   render() {
-    const categoryList = { title: "Category List" };
-    const productList = { title: "Product List" };
+    const categories = { title: "Categories" };
+    const products = { title: "Products" };
 
     return (
       <div className="min-vh-100 bg-light">
@@ -99,7 +116,7 @@ export default class App extends Component<{}, AppState> {
                   <CategoryList
                     currentCategory={this.state.currentCategory}
                     changeCategory={this.changeCategory}
-                    info={categoryList}
+                    info={categories}
                   />
                 </CardBody>
               </Card>
@@ -114,17 +131,19 @@ export default class App extends Component<{}, AppState> {
                       exact
                       path="/"
                       render={(props: any) => (
-                        <ProductsList
-                          {...props}
-                          products={this.getPaginatedProducts()}
-                          addToCart={this.addToCart}
-                          currentCategory={this.state.currentCategory}
-                          changeCategory={this.changeCategory}
-                          info={productList}
-                          currentPage={this.state.currentPage}
-                          totalPages={this.getTotalPages()}
-                          onPageChange={this.handlePageChange}
-                        />
+                      <ProductsList
+                        {...props}
+                        products={this.getPaginatedProducts()}
+                        addToCart={this.addToCart}
+                        currentCategory={this.state.currentCategory}
+                        changeCategory={this.changeCategory}
+                        info={products}
+                        currentPage={this.state.currentPage}
+                        totalPages={this.getTotalPages()}
+                        onPageChange={this.handlePageChange}
+                        searchTerm={this.state.searchTerm}
+                        onSearch={this.handleSearch}
+                      />
                       )}
                     />
                     <Route

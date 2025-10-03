@@ -41,6 +41,8 @@ export interface ProductsListProps {
   currentPage: number;
   totalPages: number;
   onPageChange: (pageNumber: number) => void;
+  searchTerm: string;
+  onSearch: (searchTerm: string) => void;
 }
 
 export interface CartListProps {
@@ -60,4 +62,5 @@ export interface AppState {
   cart: CartItem[];
   currentPage: number;
   productsPerPage: number;
+  searchTerm: string;
 }
