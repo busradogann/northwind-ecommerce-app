@@ -8,7 +8,7 @@ import CartList from "./components/CartList";
 import FormDemo1 from "./components/FormDemo1";
 import FormDemo2 from "./components/FormDemo2";
 
-import React, { Component } from "react";
+import { Component } from "react";
 import { Container, Row, Col } from "reactstrap";
 import alertify from "alertifyjs";
 import { Route, Switch } from "react-router-dom";
@@ -18,7 +18,9 @@ export default class App extends Component {
   state = {
     currentCategory: "",
     products: [],
-    cart: []
+    cart: [],
+    currentPage: 1,
+    productsPerPage: 10
   };
 
   componentDidMount = () => {
@@ -26,7 +28,7 @@ export default class App extends Component {
   };
 
   changeCategory = category => {
-    this.setState({ currentCategory: category.categoryName }); //o anki category bilgisini tutuyor.
+    this.setState({ currentCategory: category.categoryName, currentPage: 1 }); //o anki category bilgisini tutuyor.
     this.getProducts(category.id);
   };
 
@@ -63,6 +65,23 @@ export default class App extends Component {
     alertify.error(product.productName + " removed to cart!!!", 3);
   };
 
+  // Pagination methods
+  handlePageChange = pageNumber => {
+    this.setState({ currentPage: pageNumber });
+  };
+
+  getPaginatedProducts = () => {
+    const { products, currentPage, productsPerPage } = this.state;
+    const startIndex = (currentPage - 1) * productsPerPage;
+    const endIndex = startIndex + productsPerPage;
+    return products.slice(startIndex, endIndex);
+  };
+
+  getTotalPages = () => {
+    const { products, productsPerPage } = this.state;
+    return Math.ceil(products.length / productsPerPage);
+  };
+
   render() {
     let categoryList = { title: "Category List" };
     let productList = { title: "Product List" };
@@ -87,11 +106,14 @@ export default class App extends Component {
                   render={props => (
                     <ProductsList
                       {...props}
-                      products={this.state.products}
+                      products={this.getPaginatedProducts()}
                       addToCart={this.addToCart}
                       currentCategory={this.state.currentCategory}
                       changeCategory={this.changeCategory}
                       info={productList}
+                      currentPage={this.state.currentPage}
+                      totalPages={this.getTotalPages()}
+                      onPageChange={this.handlePageChange}
                     />
                   )}
                 />

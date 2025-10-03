@@ -16,7 +16,6 @@ export default function Navi(props) {
 
   const toggle = () => setIsOpen(!isOpen);
 
-  console.log(props.cart)
   return (
     <div>
       <Navbar color="light" light expand="md">
