@@ -34,7 +34,7 @@ const CartList: React.FC<CartListProps> = ({ cart, removeFromCart, clearCart }) 
       {/* Cart Summary */}
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h4 className="mb-0">Shopping Cart</h4>
-        <div className="d-flex align-items-center gap-3">
+        <div className="d-flex align-items-center" style={{ gap: "0.5rem" }}>
           <Badge color="primary" className="fs-6 px-3 py-2">
             {getTotalItems()} items
           </Badge>
