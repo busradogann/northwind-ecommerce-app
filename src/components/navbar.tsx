@@ -51,10 +51,8 @@ export default function Navi(props: NaviProps) {
               Form Demo 2
             </NavLink>
           </NavItem>
-          <NavItem>
-            <Cart cart={props.cart} removeFromCart={props.removeFromCart} clearCart={props.clearCart}/>
-          </NavItem>
         </Nav>
+        <Cart cart={props.cart} removeFromCart={props.removeFromCart} clearCart={props.clearCart}/>
       </Collapse>
     </Navbar>
   );
