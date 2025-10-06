@@ -52,7 +52,7 @@ export default function Navi(props: NaviProps) {
             </NavLink>
           </NavItem>
           <NavItem>
-            <Cart cart={props.cart} removeFromCart={props.removeFromCart}/>
+            <Cart cart={props.cart} removeFromCart={props.removeFromCart} clearCart={props.clearCart}/>
           </NavItem>
         </Nav>
       </Collapse>

@@ -9,7 +9,7 @@ import FormDemo1 from "./components/form-demo-1";
 import FormDemo2 from "./components/form-demo-2";
 
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Card, CardBody } from "reactstrap";
+import { Container, Row, Col, Card, CardBody, Navbar } from "reactstrap";
 import { Route, Switch } from "react-router-dom";
 import { Product, Category, Cart } from "./types/models";
 import alertify from "alertifyjs";
@@ -24,7 +24,34 @@ const App: React.FC = () => {
 
   useEffect(() => {
     getProducts();
+    loadCartFromStorage();
   }, []);
+
+  // Save cart to localStorage whenever cart changes
+  useEffect(() => {
+    saveCartToStorage(cart);
+  }, [cart]);
+
+  // LocalStorage functions
+  const saveCartToStorage = (cartData: Cart[]) => {
+    try {
+      localStorage.setItem('northwind-cart', JSON.stringify(cartData));
+    } catch (error) {
+      console.error('Error saving cart to localStorage:', error);
+    }
+  };
+
+  const loadCartFromStorage = () => {
+    try {
+      const savedCart = localStorage.getItem('northwind-cart');
+      if (savedCart) {
+        const parsedCart = JSON.parse(savedCart);
+        setCart(parsedCart);
+      }
+    } catch (error) {
+      console.error('Error loading cart from localStorage:', error);
+    }
+  };
 
   const changeCategory = (category: Category) => {
     setCurrentCategory(category.name);
@@ -71,6 +98,11 @@ const App: React.FC = () => {
     alertify.error(product.productName + " removed to cart!!!", 3);
   };
 
+  const clearCart = () => {
+    setCart([]);
+    alertify.warning("Cart cleared!", 3);
+  };
+
   // Pagination methods
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
@@ -103,7 +135,7 @@ const App: React.FC = () => {
   return (
     <div className="min-vh-100 bg-light">
       <Container fluid="xl" className="py-3">
-        <Navi cart={cart} removeFromCart={removeFromCart} />
+        <Navi cart={cart} removeFromCart={removeFromCart} clearCart={clearCart} />
         
         <Row className="g-3">
           {/* Category Column - Hidden on mobile, 3 cols on tablet+, 2 cols on large screens */}
@@ -151,6 +183,7 @@ const App: React.FC = () => {
                         {...props}
                         cart={cart}
                         removeFromCart={removeFromCart}
+                        clearCart={clearCart}
                       />
                     )}
                   />

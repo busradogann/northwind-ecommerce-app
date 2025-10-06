@@ -48,11 +48,13 @@ export interface ProductsListProps {
 export interface CartListProps {
   cart: Cart[];
   removeFromCart: (product: Product) => void;
+  clearCart: () => void;
 }
 
 export interface NaviProps {
   cart: Cart[];
   removeFromCart: (product: Product) => void;
+  clearCart: () => void;
 }
 
 // App state interface

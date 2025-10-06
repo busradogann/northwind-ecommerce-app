@@ -3,7 +3,7 @@ import { Table, Button, Badge, Alert } from "reactstrap";
 import { Link } from "react-router-dom";
 import { CartListProps } from "../types/models";
 
-const CartList: React.FC<CartListProps> = ({ cart, removeFromCart }) => {
+const CartList: React.FC<CartListProps> = ({ cart, removeFromCart, clearCart }) => {
   const getTotalItems = () => {
     return cart.reduce((total, item) => total + item.quantity, 0);
   };
@@ -41,6 +41,14 @@ const CartList: React.FC<CartListProps> = ({ cart, removeFromCart }) => {
           <Badge color="success" className="fs-6 px-3 py-2">
             Total: ${getTotalPrice().toFixed(2)}
           </Badge>
+          <Button 
+            color="warning" 
+            size="sm"
+            onClick={clearCart}
+            className="rounded-pill px-3"
+          >
+            Clear Cart
+          </Button>
         </div>
       </div>
 
