@@ -1,15 +1,11 @@
-import { Component } from 'react'
+import { Information } from "../types/models";
 
-interface HeaderProps {
-  title: string;
-}
+const Header: React.FC<Information> = ({ title }) => {
+  return (
+    <div>
+      {title}
+    </div>
+  );
+};
 
-export default class Header extends Component<HeaderProps> {
-  render() {
-    return (
-      <div>
-        {this.props.title}
-      </div>
-    )
-  }
-}
+export default Header;

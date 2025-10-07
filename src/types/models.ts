@@ -66,6 +66,6 @@ export interface AppState {
   searchTerm: string;
 }
 
-interface Information {
+export interface Information {
   title: string;
 }
