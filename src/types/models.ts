@@ -22,14 +22,14 @@ export interface Cart {
 }
 
 // Component props interfaces
-export interface CategoryList {
+export interface Categories {
   currentCategory: string;
   changeCategory: (category: Category) => void;
   info: Information;
 }
 
 // ProductList component props
-export interface ProductList {
+export interface Products {
   products: Product[];
   addToCart: (product: Product) => void;
   currentCategory: string;
