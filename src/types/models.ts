@@ -25,9 +25,7 @@ export interface Cart {
 export interface CategoryList {
   currentCategory: string;
   changeCategory: (category: Category) => void;
-  info: {
-    title: string;
-  };
+  info: Information;
 }
 
 // ProductList component props
@@ -36,9 +34,7 @@ export interface ProductList {
   addToCart: (product: Product) => void;
   currentCategory: string;
   changeCategory: (category: Category) => void;
-  info: {
-    title: string;
-  };
+  info: Information;
   currentPage: number;
   totalPages: number;
   onPageChange: (pageNumber: number) => void;
@@ -68,4 +64,8 @@ export interface AppState {
   currentPage: number;
   productsPerPage: number;
   searchTerm: string;
+}
+
+interface Information {
+  title: string;
 }
