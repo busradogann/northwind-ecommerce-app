@@ -12,6 +12,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Card, CardBody } from "reactstrap";
 import { Route, Switch } from "react-router-dom";
 import { Product, Category, Cart } from "./types/models";
+import { getProducts as fetchProducts } from "./services/product.service";
 import alertify from "alertifyjs";
 
 const App: React.FC = () => {
@@ -23,7 +24,7 @@ const App: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   useEffect(() => {
-    getProducts();
+    fetchProducts().then(data => setProducts(data));
     loadCartFromStorage();
   }, []);
 
@@ -57,7 +58,7 @@ const App: React.FC = () => {
     setCurrentCategory(category.name);
     setCurrentPage(1);
     setSearchTerm("");
-    getProducts(category.id);
+    fetchProducts(category.id).then(data => setProducts(data));
   };
 
   const handleSearch = (searchTerm: string) => {
@@ -65,16 +66,6 @@ const App: React.FC = () => {
     setCurrentPage(1);
   };
 
-  const getProducts = (categoryId?: number) => {
-    let url = "http://localhost:3000/products";
-
-    if (categoryId) {
-      url += "?categoryId=" + categoryId;
-    }
-    fetch(url)
-      .then(response => response.json())
-      .then((data: Product[]) => setProducts(data));
-  };
 
   const addToCart = (product: Product) => {
     let newCart = [...cart];
