@@ -1,12 +1,12 @@
 import { ListGroup, ListGroupItem } from "reactstrap";
 import { Component } from "react";
-import { CategoryListProps, Category } from "../types/models";
+import { CategoryList, Category } from "../types/models";
 
 interface CategoryListState {
   categories: Category[];
 }
 
-export default class CategoryList extends Component<CategoryListProps, CategoryListState> {
+export default class Categories extends Component<CategoryList, CategoryListState> {
   state: CategoryListState = {
     categories: []
   };

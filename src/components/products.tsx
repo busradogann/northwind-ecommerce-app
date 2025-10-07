@@ -1,8 +1,8 @@
 import { Component } from "react";
 import { Table, Button, Pagination, PaginationItem, PaginationLink, Badge, Input, InputGroup, InputGroupText } from "reactstrap";
-import { ProductsListProps } from "../types/models";
+import { ProductList } from "../types/models";
 
-export default class ProductsList extends Component<ProductsListProps> {
+export default class ProductsList extends Component<ProductList> {
 
   renderPaginationItems = () => {
     const { currentPage, totalPages, onPageChange } = this.props;

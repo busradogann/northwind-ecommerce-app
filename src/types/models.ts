@@ -22,7 +22,7 @@ export interface Cart {
 }
 
 // Component props interfaces
-export interface CategoryListProps {
+export interface CategoryList {
   currentCategory: string;
   changeCategory: (category: Category) => void;
   info: {
@@ -30,7 +30,8 @@ export interface CategoryListProps {
   };
 }
 
-export interface ProductsListProps {
+// ProductList component props
+export interface ProductList {
   products: Product[];
   addToCart: (product: Product) => void;
   currentCategory: string;
@@ -45,12 +46,14 @@ export interface ProductsListProps {
   onSearch: (searchTerm: string) => void;
 }
 
+// CartList component props
 export interface CartListProps {
   cart: Cart[];
   removeFromCart: (product: Product) => void;
   clearCart: () => void;
 }
 
+// Navi component props
 export interface NaviProps {
   cart: Cart[];
   removeFromCart: (product: Product) => void;

@@ -9,7 +9,7 @@ import FormDemo1 from "./components/form-demo-1";
 import FormDemo2 from "./components/form-demo-2";
 
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Card, CardBody, Navbar } from "reactstrap";
+import { Container, Row, Col, Card, CardBody } from "reactstrap";
 import { Route, Switch } from "react-router-dom";
 import { Product, Category, Cart } from "./types/models";
 import alertify from "alertifyjs";
